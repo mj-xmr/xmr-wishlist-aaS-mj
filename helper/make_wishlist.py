@@ -243,7 +243,7 @@ def load_old_txs(args):
     info = rpc_connection.get_transfers(params)
     num = 0
 
-    if info["in"]:
+    if "in" in info and info["in"]:
         print("Wallet history detected. Importing")
         for tx in info["in"]:
             old_txs[num] = {tx["address"]: formatAmount(tx["amount"])}
