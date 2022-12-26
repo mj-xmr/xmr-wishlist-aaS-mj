@@ -8,7 +8,7 @@ from PIL import Image
 import requests
 import os
 import argparse
-from github import Github
+#from github import Github
 from monerorpc.authproxy import AuthServiceProxy, JSONRPCException
 #Api key of "-" appears to work currently, this may change,
 cryptocompare.cryptocompare._set_api_key_parameter("-")
@@ -24,8 +24,8 @@ prc_pass = 'mTC78KRoTzRm21amFYXoWA==|'
 node_url_tpl =  'http://{0}:{1}@{2}:{3}/json_rpc'
 git_url_base = f'https://raw.githubusercontent.com/{git_username}/{repo_name}/main'
 json_url = f"{git_url_base}/{repo_dir}/wishlist-data.json"
-viewkey = "051b61127e35e8b539c070330443f431360edcc54089ee4b5f00f3b89e84270b"
-main_address = "43yXPq28puShLkFcRgZ3kBXA2f7pmQFuweWDjt1GcKmuG5v9vRFUb81V3q8jwghxFg5bVRASKc4YedRmd3GJ9rxkBpdkGDM"
+viewkey = "970049c5c2ef61aae1b4548183e4f955682240781b30f83d73b8185df0bf9a0f"
+
 percent_buffer = 0.05
 
 usd_goal_address = {}
@@ -38,6 +38,7 @@ def get_args():
     parser.add_argument('-pf', '--password-file',  default='', type=str, help="RPC password file in the working directory like: 'monero-wallet-rpc.18086.login'")
     parser.add_argument('-p',  '--port',           default=18086, type=int, help="RPC wallet's port'")
     parser.add_argument('-ho', '--host',           default='localhost', type=str, help="RPC wallet's hostname'")
+    parser.add_argument('-ma', '--main-address',           type=str, help="Main address")
 
     return parser.parse_args()
 
@@ -267,13 +268,32 @@ def load_old_txs(args):
 
 def create_new_wishlist(args):
     global wishes
-    global viewkey, main_address
+    global viewkey
 
     #Your wishlist
     #-------------------------------------------------------------
     #wishlist_add_new(500,"Do something for the community",None,"work")
     #wishlist_add_new(5,"buy me a coffee (mdevs)","87UF7BP47y8Zins3C7ZHDWcUSgZBchtebguCaeRQiofyFT5L9PLhZ55EMC8e4WSHaLUzGYj5w5St2jQngCeHikaa4E36Dmv","gift")
-    wishlist_add_new(args, 5,"buy me a coffee",'84N46mxVLM77YaqqMBzVe9cAN4ChBDjsXCvi9UtPVxdCeVeMfrJJM2kYv5ctp6V5taJUmRvhFWixfZ8iR2UySaRrDQgBPz7',"gift")
+    wishlist_add_new(args, 1906, "Distribution and CI", None, "work")
+    wishlist_add_new(args, 1906, "Ports", None, "work")
+    wishlist_add_new(args, 1906, "Search algorithm", None, "work")
+    wishlist_add_new(args, 1906, "Modularization and enabling future work", None, "work")
+    wishlist_add_new(args, 1906, "Electrical modeling improvement", None, "work")
+    wishlist_add_new(args, 1906, "Documentation", None, "work")
+    wishlist_add_new(args, 1906, "Minor", None, "work")
+    wishlist_add_new(args, 1906, "Compare historical results", None, "work")
+    wishlist_add_new(args, 1906, "Scheduled energy production", None, "work")
+    wishlist_add_new(args, 1906, "Detailed cloud forecast", None, "work")
+    wishlist_add_new(args, 1906, "Leverage Boost Units library", None, "work")
+    wishlist_add_new(args, 1906, "Synthetically increasing the load", None, "work")
+    wishlist_add_new(args, 1906, "Hashrate predictions into model ", None, "work")
+    wishlist_add_new(args, 1906, "UIs: console + curses + Qt", None, "work")
+    wishlist_add_new(args, 1906, "Habits dynamic UI", None, "work")
+    wishlist_add_new(args, 1906, "Enabling crypto currencies other than XMR", None, "work")
+    wishlist_add_new(args, 1906, "Business model introduction", None, "work")
+    
+#wishlist_add_new(args, 1906, "", None, "work")
+    #wishlist_add_new(args, 5,"buy me a coffee",'84N46mxVLM77YaqqMBzVe9cAN4ChBDjsXCvi9UtPVxdCeVeMfrJJM2kYv5ctp6V5taJUmRvhFWixfZ8iR2UySaRrDQgBPz7',"gift")
     #-------------------------------------------------------------
     
     thetime = datetime.now()
@@ -286,7 +306,7 @@ def create_new_wishlist(args):
         "image": "",
         "url": "",
         "viewkey": viewkey,
-        "main_address": main_address
+        "main_address": args.main_address
     }
 
     #search wallet for 'in' history, then compare addresses to our new list.
