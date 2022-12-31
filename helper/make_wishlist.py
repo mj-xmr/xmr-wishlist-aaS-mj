@@ -22,7 +22,8 @@ git_token = "" # Optional
 rpc_user_default = 'monero'
 prc_pass = 'mTC78KRoTzRm21amFYXoWA==|'
 node_url_tpl =  'http://{0}:{1}@{2}:{3}/json_rpc'
-git_url_base = f'https://raw.githubusercontent.com/{git_username}/{repo_name}/main'
+main_branch = 'master' # can be main
+git_url_base = f'https://raw.githubusercontent.com/{git_username}/{repo_name}/{main_branch}'
 json_url = f"{git_url_base}/{repo_dir}/wishlist-data.json"
 viewkey = "970049c5c2ef61aae1b4548183e4f955682240781b30f83d73b8185df0bf9a0f"
 
